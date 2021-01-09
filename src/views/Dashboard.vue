@@ -1,11 +1,10 @@
 <template>
-  <router-view />
-  <v-alert type="success"></v-alert>
+  <h1>This is Dashboard</h1>
 </template>
 
 <script>
 export default {
-  name: "App",
+  name: "Dashboard",
 };
 </script>
 
