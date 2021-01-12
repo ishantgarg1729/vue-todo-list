@@ -1,6 +1,6 @@
 <template>
+  <loader v-if="loading" />
   <div class="container">
-    <loader v-if="loading" />
     <div class="card">
       <h1>Signup</h1>
       <input type="text" v-model="email" placeholder="Enter Email!" />
@@ -40,6 +40,7 @@ export default {
             },
           });
           this.loading = false;
+          this.$router.push({ name: "login" });
         } catch (error) {
           this.loading = false;
           this.error = "Something went wrong!";

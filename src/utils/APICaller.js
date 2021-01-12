@@ -1,5 +1,16 @@
 import axios from "axios";
 
+axios.interceptors.request.use(
+  (config) => {
+    if (config.url.includes("/dashboard")) {
+      const token = localStorage.getItem("token");
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => error
+);
+
 axios.interceptors.response.use(
   (response) => response,
   (error) => {

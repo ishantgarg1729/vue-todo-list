@@ -1,4 +1,5 @@
 <template>
+  <loader v-if="loading" />
   <div class="container">
     <div class="card">
       <h1>Login</h1>
@@ -13,17 +14,37 @@
 
 <script>
 import { emailValidator } from "../utils/validators";
+import APICaller from "../utils/APICaller";
+import Loader from "../components/Loader";
 
 export default {
   name: "Login",
+  components: {
+    loader: Loader,
+  },
   data() {
-    return { email: "", password: "", error: "" };
+    return { email: "", password: "", error: "", loading: false };
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (emailValidator(this.email)) {
         this.error = "";
+        this.loading = true;
+        const response = await APICaller({
+          url: "/users/login",
+          method: "POST",
+          data: {
+            email: this.email,
+            password: this.password,
+          },
+        });
+        if (response && response?.token) {
+          localStorage.setItem("token", response.token);
+        }
+        this.loading = false;
+        this.$router.push({ name: "dashboard" });
       } else {
+        this.loading = false;
         this.error = "Invalid Error Format!";
       }
     },

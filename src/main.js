@@ -4,6 +4,6 @@ import routes from "./routers";
 import store from "./store";
 
 createApp(App)
+  .use(store)
   .use(routes)
-  .provide(store)
   .mount("#app");
